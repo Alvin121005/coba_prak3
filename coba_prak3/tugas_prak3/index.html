@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do App with Dynamic Page Controls</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: white;
+            color: black;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            width: 350px;
+            margin: 0 auto;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+
+        #taskList {
+            list-style: none;
+            padding: 0;
+        }
+
+        #taskList li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .close {
+            color: red;
+            float: right;
+            cursor: pointer;
+        }
+
+        .edit {
+            color: blue;
+            float: right;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .dark-mode {
+            background-color: #333;
+            color: #f1f1f1;
+        }
+
+        .controls {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>My To-Do List</h2>
+        
+        <!-- Dynamic Controls Section -->
+        <div class="controls">
+            <div>
+                <label for="bg-color">Change Background Color:</label>
+                <select id="bg-color">
+                    <option value="white">White</option>
+                    <option value="lightblue">Light Blue</option>
+                    <option value="lightgreen">Light Green</option>
+                    <option value="lightyellow">Light Yellow</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="font-size">Change Font Size:</label>
+                <input type="range" id="font-size" min="12" max="36" value="16">
+            </div>
+
+            <div>
+                <button id="toggle-dark-mode">Toggle Dark Mode</button>
+            </div>
+
+            <div>
+                <label for="font-style">Change Font Style:</label>
+                <select id="font-style">
+                    <option value="sans-serif">Sans-Serif</option>
+                    <option value="serif">Serif</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- To-Do App -->
+        <input type="text" id="newTask" placeholder="Add a new task...">
+        <button onclick="addTask()">Add</button>
+
+        <ul id="taskList">
+        </ul>
+    </div>
+
+    <script>
+        // Add Task
+        function addTask() {
+            const taskText = document.getElementById("newTask").value;
+            if (taskText === '') {
+                alert("You must write something!");
+                return;
+            }
+
+            const li = document.createElement("li");
+            li.textContent = taskText;
+
+            // Create Edit Button
+            const editBtn = document.createElement("span");
+            editBtn.textContent = "Edit";
+            editBtn.className = "edit";
+            editBtn.onclick = function () {
+                editTask(this);
+            };
+            li.appendChild(editBtn);
+
+            // Create Delete Button
+            const closeBtn = document.createElement("span");
+            closeBtn.textContent = "×";
+            closeBtn.className = "close";
+            closeBtn.onclick = function () {
+                deleteTask(this);
+            };
+            li.appendChild(closeBtn);
+
+            document.getElementById("taskList").appendChild(li);
+            document.getElementById("newTask").value = "";
+        }
+
+        // Delete Task
+        function deleteTask(element) {
+            element.parentElement.remove();
+        }
+
+        // Edit Task
+        function editTask(element) {
+            const currentTask = element.parentElement.firstChild.textContent;
+            const newTask = prompt("Edit your task:", currentTask);
+            if (newTask !== null && newTask.trim() !== "") {
+                element.parentElement.firstChild.textContent = newTask;
+            }
+        }
+
+        // Dynamic Page Controls
+        document.getElementById('bg-color').addEventListener('change', function () {
+            document.body.style.backgroundColor = this.value;
+        });
+
+        document.getElementById('font-size').addEventListener('input', function () {
+            document.body.style.fontSize = this.value + 'px';
+        });
+
+        document.getElementById('toggle-dark-mode').addEventListener('click', function () {
+            document.body.classList.toggle('dark-mode');
+        });
+
+        document.getElementById('font-style').addEventListener('change', function () {
+            document.body.style.fontFamily = this.value;
+        });
+    </script>
+</body>
+
+</html>
