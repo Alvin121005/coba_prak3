@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Slider Example</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: rgb(255, 255, 255); /* Default background */
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .slider-container {
+            text-align: center;
+        }
+
+        .slider {
+            width: 300px;
+            margin: 20px;
+        }
+
+        .label {
+            font-size: 18px;
+            margin: 10px;
+        }
+
+        .value-display {
+            font-size: 18px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="slider-container">
+        <h1>Change Background Color with Sliders</h1>
+        
+        <!-- Red Slider -->
+        <div class="label">Red: <span id="redValue">255</span></div>
+        <input type="range" id="redSlider" class="slider" min="0" max="255" value="255">
+
+        <!-- Green Slider -->
+        <div class="label">Green: <span id="greenValue">255</span></div>
+        <input type="range" id="greenSlider" class="slider" min="0" max="255" value="255">
+
+        <!-- Blue Slider -->
+        <div class="label">Blue: <span id="blueValue">255</span></div>
+        <input type="range" id="blueSlider" class="slider" min="0" max="255" value="255">
+
+        <p id="colorCode">RGB(255, 255, 255)</p>
+    </div>
+
+    <!-- JavaScript to handle the sliders and update the color -->
+    <script>
+        const redSlider = document.getElementById('redSlider');
+        const greenSlider = document.getElementById('greenSlider');
+        const blueSlider = document.getElementById('blueSlider');
+        
+        const redValueDisplay = document.getElementById('redValue');
+        const greenValueDisplay = document.getElementById('greenValue');
+        const blueValueDisplay = document.getElementById('blueValue');
+        
+        const colorCodeDisplay = document.getElementById('colorCode');
+
+        // Function to update the background color based on slider values
+        function updateBackgroundColor() {
+            const red = redSlider.value;
+            const green = greenSlider.value;
+            const blue = blueSlider.value;
+
+            // Update the background color of the body
+            document.body.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
+
+            // Update the value display for each color
+            redValueDisplay.textContent = red;
+            greenValueDisplay.textContent = green;
+            blueValueDisplay.textContent = blue;
+
+            // Display the current RGB value
+            colorCodeDisplay.textContent = `RGB(${red}, ${green}, ${blue})`;
+        }
+
+        // Add event listeners to update background when sliders are moved
+        redSlider.addEventListener('input', updateBackgroundColor);
+        greenSlider.addEventListener('input', updateBackgroundColor);
+        blueSlider.addEventListener('input', updateBackgroundColor);
+    </script>
+
+</body>
+</html>
